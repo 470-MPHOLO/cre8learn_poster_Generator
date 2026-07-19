@@ -30,6 +30,7 @@
     padding:2px;
     background:linear-gradient(115deg,#3ddc97,#7c6ff0 45%,#f2795a 90%);
     box-shadow:0 20px 60px rgba(0,0,0,.5);
+    overflow:hidden;
   }
   #poster{
     width:100%;
@@ -39,6 +40,7 @@
       linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px) 0 0/28px 100%,
       var(--bg);
     padding:26px 24px 20px;
+    overflow:hidden;
   }
   .badge{
     display:inline-flex;
@@ -330,17 +332,30 @@
   document.getElementById('exportBtn').onclick = ()=>{
     const btn = document.getElementById('exportBtn');
     btn.disabled = true; btn.textContent = 'Exporting…';
-    const poster = document.getElementById('poster');
-    html2canvas(poster, {scale:3, backgroundColor:'#0a0a10', useCORS:true}).then(canvas=>{
+
+    // clear any active text-edit focus/highlight
+    if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
+
+    // hide tool-only controls so they never appear in the exported image
+    const addBtn = document.getElementById('addPkgBtn');
+    const removeBtns = document.querySelectorAll('.remove-btn');
+    if(addBtn) addBtn.style.display = 'none';
+    removeBtns.forEach(b=> b.style.display = 'none');
+
+    const target = document.getElementById('posterOuter');
+
+    html2canvas(target, {scale:3, backgroundColor:null, useCORS:true}).then(canvas=>{
       const link = document.createElement('a');
       link.download = 'cre8learn-price-list.png';
       link.href = canvas.toDataURL('image/png');
       link.click();
-      btn.disabled = false; btn.textContent = 'Export as PNG';
     }).catch(err=>{
       console.error(err);
-      btn.disabled = false; btn.textContent = 'Export as PNG';
       alert('Export failed — try again.');
+    }).finally(()=>{
+      if(addBtn) addBtn.style.display = '';
+      removeBtns.forEach(b=> b.style.display = '');
+      btn.disabled = false; btn.textContent = 'Export as PNG';
     });
   };
 
