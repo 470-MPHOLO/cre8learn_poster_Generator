@@ -4,12 +4,13 @@
     --card:#12121c;
     --card-border:#232336;
     --purple:#7c6ff0;
-    --purple-soft:#4a4470;
     --mint:#6fe3ac;
     --orange:#f2795a;
     --gray:#8a8a9a;
     --gray-dim:#5c5c6c;
     --white:#f2f2f7;
+    --grid-line:rgba(255,255,255,.03);
+    --shadow:0 20px 60px rgba(0,0,0,.45);
   }
   *{box-sizing:border-box;}
   .app-wrap{
@@ -19,29 +20,51 @@
     flex-wrap:wrap;
     align-items:flex-start;
     padding:20px;
-    background:transparent;
     color:var(--white);
   }
 
-  /* ---------- POSTER ---------- */
+  /* ---------- POSTER (wide/landscape) ---------- */
   #posterOuter{
-    width:403px;
-    border-radius:22px;
+    width:900px;
+    max-width:100%;
+    border-radius:24px;
     padding:2px;
     background:linear-gradient(115deg,#3ddc97,#7c6ff0 45%,#f2795a 90%);
-    box-shadow:0 20px 60px rgba(0,0,0,.5);
+    box-shadow:var(--shadow);
     overflow:hidden;
+  }
+  #posterOuter.theme-light{
+    --bg:#ffffff;
+    --card:#f6f6fb;
+    --card-border:#e4e4ee;
+    --purple:#6b58e6;
+    --mint:#0f9e63;
+    --orange:#d8502b;
+    --gray:#5c5c6c;
+    --gray-dim:#8d8d9b;
+    --white:#14141c;
+    --grid-line:rgba(20,20,30,.035);
+    --shadow:0 20px 50px rgba(20,20,35,.16);
   }
   #poster{
     width:100%;
-    border-radius:20px;
+    border-radius:22px;
     background:
-      linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px) 0 0/100% 28px,
-      linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px) 0 0/28px 100%,
+      linear-gradient(var(--grid-line) 1px,transparent 1px) 0 0/100% 28px,
+      linear-gradient(90deg,var(--grid-line) 1px,transparent 1px) 0 0/28px 100%,
       var(--bg);
-    padding:26px 24px 20px;
+    padding:30px 34px 26px;
     overflow:hidden;
   }
+
+  .top-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    margin-bottom:22px;
+  }
+  .brand-block{flex:1;min-width:0;}
   .badge{
     display:inline-flex;
     align-items:center;
@@ -52,23 +75,22 @@
     font-size:10px;
     letter-spacing:.14em;
     color:var(--mint);
-    margin-bottom:18px;
+    margin-bottom:14px;
   }
   .badge::before{content:"•";color:var(--mint);}
   .logo{
-    font-size:34px;
+    font-size:32px;
     font-weight:800;
     line-height:1;
-    margin:2px 0 4px;
+    margin:0 0 6px;
     letter-spacing:-0.02em;
   }
   .logo .accent{color:var(--mint);}
   .subtitle{
     font-size:11px;
     font-weight:700;
-    letter-spacing:.18em;
+    letter-spacing:.16em;
     color:var(--purple);
-    margin-bottom:20px;
   }
   .toggle-row{
     display:flex;
@@ -76,13 +98,13 @@
     border:1px solid var(--card-border);
     border-radius:12px;
     padding:4px;
-    margin-bottom:22px;
     gap:4px;
+    flex:none;
+    align-self:flex-start;
+    margin-top:2px;
   }
   .toggle-opt{
-    flex:1;
-    text-align:center;
-    padding:9px 6px;
+    padding:9px 14px;
     border-radius:9px;
     font-size:12px;
     font-weight:600;
@@ -93,6 +115,7 @@
     align-items:center;
     justify-content:center;
     gap:6px;
+    white-space:nowrap;
   }
   .toggle-opt .dot{width:6px;height:6px;border-radius:50%;background:var(--mint);display:inline-block;opacity:0;}
   .toggle-opt.active{
@@ -100,6 +123,7 @@
     color:#fff;
   }
   .toggle-opt.active .dot{opacity:1;}
+
   .section-label{
     font-size:10px;
     letter-spacing:.18em;
@@ -107,30 +131,37 @@
     margin:0 0 10px 2px;
     font-weight:700;
   }
-  .pkg-list{display:flex;flex-direction:column;gap:9px;margin-bottom:22px;}
-  .pkg-row{
+
+  .pkg-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:20px;
+  }
+  .pkg-card{
     position:relative;
-    display:flex;
-    align-items:center;
-    gap:10px;
     background:var(--card);
     border:1px solid var(--card-border);
-    border-radius:13px;
-    padding:12px 14px;
+    border-radius:14px;
+    padding:15px 16px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    min-height:140px;
   }
-  .pkg-row.popular{border-color:var(--purple);box-shadow:0 0 0 1px var(--purple) inset;}
-  .pkg-dot{width:8px;height:8px;border-radius:50%;flex:none;margin-top:3px;}
-  .pkg-body{flex:1;min-width:0;}
-  .pkg-name-line{display:flex;align-items:center;gap:7px;margin-bottom:3px;flex-wrap:wrap;}
+  .pkg-card.popular{border-color:var(--purple);box-shadow:0 0 0 1px var(--purple) inset;}
+  .pkg-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+  .pkg-dot{width:8px;height:8px;border-radius:50%;flex:none;}
   .pkg-name{font-size:14px;font-weight:700;color:var(--white);outline:none;}
   .pop-badge{
-    font-size:9px;font-weight:700;letter-spacing:.05em;
+    font-size:8.5px;font-weight:700;letter-spacing:.05em;
     background:var(--purple);color:#fff;padding:2px 7px;border-radius:999px;
   }
   .pkg-desc{font-size:11px;color:var(--gray);line-height:1.4;outline:none;}
   .pkg-price{
-    font-size:15px;font-weight:800;color:var(--mint);white-space:normal;outline:none;text-align:right;
-    flex:none;max-width:130px;
+    margin-top:auto;
+    padding-top:6px;
+    font-size:18px;font-weight:800;color:var(--mint);outline:none;
   }
   .pkg-price.orange{color:var(--orange);}
   .remove-btn{
@@ -141,48 +172,72 @@
     display:flex;align-items:center;justify-content:center;
     cursor:pointer;opacity:0;transition:opacity .15s;
   }
-  .pkg-row:hover .remove-btn{opacity:1;}
-  .add-row-btn{
-    text-align:center;font-size:11px;color:var(--gray);
-    border:1px dashed var(--card-border);border-radius:12px;
-    padding:9px;cursor:pointer;
+  .pkg-card:hover .remove-btn{opacity:1;}
+  .add-card{
+    border:1px dashed var(--card-border);
+    border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--gray);font-size:12px;cursor:pointer;
+    min-height:140px;
   }
-  .add-row-btn:hover{color:var(--mint);border-color:var(--mint);}
-  .divider{border:none;border-top:1px solid var(--card-border);margin:2px 0 18px;}
-  .footer-note{
+  .add-card:hover{color:var(--mint);border-color:var(--mint);}
+
+  .maint-row{
+    display:flex;align-items:center;gap:10px;
+    background:var(--card);border:1px solid var(--card-border);border-radius:13px;
+    padding:12px 16px;margin-bottom:20px;
+  }
+  .maint-row .pkg-name{font-size:13px;}
+  .maint-row .pkg-desc{font-size:11px;}
+  .maint-row .pkg-price{margin-top:0;font-size:15px;white-space:nowrap;}
+  .maint-body{flex:1;min-width:0;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+
+  .footer-band{
+    display:flex;
+    gap:24px;
     border-top:1px solid var(--card-border);
-    padding-top:14px;margin-top:6px;
-    font-size:10.5px;color:var(--gray);line-height:1.5;text-align:center;outline:none;
+    padding-top:16px;
   }
-  .footer-note b, .footer-note .strong{color:var(--white);}
-  .contact-line{
-    text-align:center;font-size:11px;color:var(--white);
-    margin-top:12px;font-weight:600;letter-spacing:.01em;outline:none;
+  .footer-note{
+    flex:1.3;
+    font-size:10.5px;color:var(--gray);line-height:1.5;outline:none;
   }
-  .contact-line .sep{color:var(--gray-dim);margin:0 6px;font-weight:400;}
-  .bottom-bar{
-    display:flex;justify-content:space-between;align-items:center;
-    margin-top:14px;padding-top:12px;border-top:1px solid var(--card-border);
-    font-size:10.5px;
+  .footer-note .strong{color:var(--white);}
+  .footer-contact{
+    flex:1;
+    display:flex;flex-direction:column;
+    justify-content:center;
+    gap:6px;
+    border-left:1px solid var(--card-border);
+    padding-left:20px;
   }
+  .contact-line{font-size:11px;color:var(--white);font-weight:600;outline:none;}
+  .contact-line .sep{color:var(--gray-dim);margin:0 5px;font-weight:400;}
+  .bottom-line{display:flex;justify-content:space-between;gap:10px;font-size:10.5px;}
   .bottom-url{color:var(--mint);outline:none;word-break:break-all;}
-  .bottom-region{color:var(--gray-dim);outline:none;}
+  .bottom-region{color:var(--gray-dim);outline:none;white-space:nowrap;}
+
   [contenteditable="true"]{cursor:text;}
-  [contenteditable="true"]:focus{background:rgba(124,111,240,.12);border-radius:4px;}
+  [contenteditable="true"]:focus{background:rgba(124,111,240,.14);border-radius:4px;}
 
   /* ---------- CONTROLS PANEL ---------- */
   .panel{
     width:300px;
-    background:var(--card);
-    border:1px solid var(--card-border);
+    background:#12121c;
+    border:1px solid #232336;
     border-radius:16px;
     padding:20px;
   }
-  .panel h3{margin:0 0 6px;font-size:15px;}
-  .panel p.hint{font-size:12px;color:var(--gray);margin:0 0 18px;line-height:1.5;}
-  .field{margin-bottom:14px;}
-  .field label{display:block;font-size:11px;color:var(--gray);margin-bottom:5px;}
-  .field input[type=color]{width:36px;height:28px;padding:0;border:none;background:none;cursor:pointer;}
+  .panel h3{margin:0 0 6px;font-size:15px;color:#f2f2f7;}
+  .panel p.hint{font-size:12px;color:#8a8a9a;margin:0 0 16px;line-height:1.5;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:11px;color:#8a8a9a;margin-bottom:7px;}
+  .theme-switch{display:flex;gap:8px;}
+  .theme-btn{
+    flex:1;padding:9px;border-radius:9px;border:1px solid #232336;
+    background:#0a0a10;color:#8a8a9a;font-size:12px;font-weight:600;cursor:pointer;
+  }
+  .theme-btn.active{background:linear-gradient(120deg,#8d7ff5,#6f6bea);color:#fff;border-color:transparent;}
   .exportBtn{
     width:100%;
     background:linear-gradient(120deg,#3ddc97,#7c6ff0);
@@ -197,53 +252,61 @@
   }
   .exportBtn:hover{filter:brightness(1.08);}
   .exportBtn:disabled{opacity:.6;cursor:default;}
-  .small-hint{font-size:10.5px;color:var(--gray-dim);margin-top:8px;line-height:1.4;}
-  .divider2{height:1px;background:var(--card-border);margin:16px 0;}
+  .small-hint{font-size:10.5px;color:#5c5c6c;margin-top:8px;line-height:1.4;}
+  .divider2{height:1px;background:#232336;margin:16px 0;}
 </style>
 
 <div class="app-wrap">
   <div id="posterOuter">
     <div id="poster">
-      <div class="badge" contenteditable="true">PRICE LIST 2026</div>
-      <div class="logo"><span contenteditable="true">cre8</span><span class="accent" contenteditable="true">learn</span></div>
-      <div class="subtitle" contenteditable="true">WEB DEVELOPMENT PACKAGES</div>
-
-      <div class="toggle-row" id="toggleRow">
-        <div class="toggle-opt active" data-currency="M" id="optM"><span class="dot"></span>Ls Lesotho (M)</div>
-        <div class="toggle-opt" data-currency="USD" id="optUSD"><span class="dot"></span>International ($)</div>
+      <div class="top-row">
+        <div class="brand-block">
+          <div class="badge" contenteditable="true">PRICE LIST 2026</div>
+          <div class="logo"><span contenteditable="true">cre8</span><span class="accent" contenteditable="true">learn</span></div>
+          <div class="subtitle" contenteditable="true">WEB DEVELOPMENT PACKAGES</div>
+        </div>
+        <div class="toggle-row" id="toggleRow">
+          <div class="toggle-opt active" data-currency="M" id="optM"><span class="dot"></span>Ls Lesotho (M)</div>
+          <div class="toggle-opt" data-currency="USD" id="optUSD"><span class="dot"></span>International ($)</div>
+        </div>
       </div>
 
       <div class="section-label">PACKAGES</div>
-      <div class="pkg-list" id="pkgList"><!-- rows injected --></div>
+      <div class="pkg-grid" id="pkgGrid"><!-- rows injected --></div>
 
       <div class="section-label">ONGOING SUPPORT</div>
-      <div class="pkg-list" id="maintList" style="margin-bottom:16px;"><!-- row injected --></div>
+      <div id="maintRow"><!-- row injected --></div>
 
-      <div class="footer-note" contenteditable="true"><span class="strong">50% deposit required to start.</span> Final payment on delivery. Custom quotes available for complex projects.</div>
-
-      <div class="contact-line" contenteditable="true">+266 5xxx xxxx<span class="sep">•</span>hello@cre8learn.co.ls<span class="sep">•</span>WhatsApp</div>
-
-      <div class="bottom-bar">
-        <span class="bottom-url" contenteditable="true">https://mr-teboho-mpholo-portfolio.pages.dev/</span>
-        <span class="bottom-region" contenteditable="true">Lesotho LS</span>
+      <div class="footer-band">
+        <div class="footer-note" contenteditable="true"><span class="strong">50% deposit required to start.</span> Final payment on delivery. Custom quotes available for complex projects.</div>
+        <div class="footer-contact">
+          <div class="contact-line" contenteditable="true">+266 56124951<span class="sep">•</span>cre8learn_institute@outlook.com<span class="sep">•</span>63608813</div>
+          <div class="bottom-line">
+            <span class="bottom-url" contenteditable="true">https://mr-teboho-mpholo-portfolio.pages.dev/</span>
+            <span class="bottom-region" contenteditable="true">Lesotho LS</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="panel">
     <h3>Poster tools</h3>
-    <p class="hint">Click any text on the poster to edit it directly. Switch currency with the toggle — each package remembers its own M and $ price. Use the buttons on each row (hover) to remove it, or the dashed button to add a new one.</p>
+    <p class="hint">Click any text on the poster to edit it directly. Switch currency to update all prices at once — each package remembers its own M and $ value. Hover a card for a × to remove it.</p>
 
     <div class="field">
-      <label>Popular package dot & border color</label>
-      <input type="color" id="purpleColor" value="#7c6ff0">
+      <label>Poster theme</label>
+      <div class="theme-switch">
+        <button class="theme-btn active" id="themeDark">Dark</button>
+        <button class="theme-btn" id="themeLight">Light</button>
+      </div>
     </div>
 
     <button class="exportBtn" id="exportBtn">Export as PNG</button>
-    <div class="small-hint">Exports the poster at 3x resolution for a crisp, print-ready PNG.</div>
+    <div class="small-hint">Exports the poster at 3x resolution, transparent outside the rounded card — clean for ads.</div>
 
     <div class="divider2"></div>
-    <div class="small-hint">Tip: reload this page any time to reset back to today's default prices.</div>
+    <div class="small-hint">Tip: reload this page any time to reset back to default prices.</div>
   </div>
 </div>
 
@@ -253,59 +316,69 @@
   const packages = [
     {dot:'#6fe3ac', name:'Starter', desc:'1–3 pages, mobile responsive, contact form', priceM:'M1,300', priceUSD:'$80', orange:false, popular:false},
     {dot:'#7c6ff0', name:'Business', desc:'5 pages, CMS so client can edit, basic SEO', priceM:'M2,800', priceUSD:'$170', orange:false, popular:true},
-    {dot:'#6fe3ac', name:'Pro', desc:'Custom site + database (bookings, users, etc.)', priceM:'M6,000', priceUSD:'$370', orange:false, popular:false},
+    {dot:'#6fe3ac', name:'Pro', desc:'Custom site + database (bookings, users, etc.)', priceM:'M5,500', priceUSD:'$370', orange:false, popular:false},
     {dot:'#6fe3ac', name:'PWA / App', desc:'Installable web app, works offline — static or dynamic', priceM:'M4,000 – M8,000', priceUSD:'$250 – $490', orange:false, popular:false},
-    {dot:'#f2795a', name:'E-commerce', desc:'Online shop, payments, product management', priceM:'M10,000', priceUSD:'$620', orange:true, popular:false},
+    {dot:'#f2795a', name:'E-commerce', desc:'Online shop, payments, product management', priceM:'M9,500', priceUSD:'$620', orange:true, popular:false},
   ];
   const maintenance = {dot:'#6fe3ac', name:'Monthly Maintenance', desc:'Updates, hosting support, fixes', priceM:'M450 /mo', priceUSD:'$30 /mo', orange:false, popular:false};
 
   let currency = 'M';
 
-  function rowHTML(pkg, idx, listId){
+  function cardHTML(pkg, idx){
     return `
-      <div class="pkg-row ${pkg.popular?'popular':''}" data-idx="${idx}" data-list="${listId}">
+      <div class="pkg-card ${pkg.popular?'popular':''}" data-idx="${idx}">
         <span class="remove-btn" title="Remove">×</span>
-        <span class="pkg-dot" style="background:${pkg.dot}"></span>
-        <div class="pkg-body">
-          <div class="pkg-name-line">
-            <span class="pkg-name" contenteditable="true">${pkg.name}</span>
-            ${pkg.popular ? '<span class="pop-badge">POPULAR</span>' : ''}
-          </div>
-          <div class="pkg-desc" contenteditable="true">${pkg.desc}</div>
+        <div class="pkg-top">
+          <span class="pkg-dot" style="background:${pkg.dot}"></span>
+          <span class="pkg-name" contenteditable="true">${pkg.name}</span>
+          ${pkg.popular ? '<span class="pop-badge">POPULAR</span>' : ''}
         </div>
-        <span class="pkg-price ${pkg.orange?'orange':''}" contenteditable="true"
-          data-m="${pkg.priceM}" data-usd="${pkg.priceUSD}">${currency==='M'?pkg.priceM:pkg.priceUSD}</span>
+        <div class="pkg-desc" contenteditable="true">${pkg.desc}</div>
+        <div class="pkg-price ${pkg.orange?'orange':''}" contenteditable="true"
+          data-m="${pkg.priceM}" data-usd="${pkg.priceUSD}">${currency==='M'?pkg.priceM:pkg.priceUSD}</div>
+      </div>`;
+  }
+
+  function maintHTML(pkg){
+    return `
+      <div class="maint-row">
+        <span class="pkg-dot" style="background:${pkg.dot}"></span>
+        <div class="maint-body">
+          <span class="pkg-name" contenteditable="true">${pkg.name}</span>
+          <span class="pkg-desc" contenteditable="true">${pkg.desc}</span>
+        </div>
+        <div class="pkg-price" contenteditable="true"
+          data-m="${pkg.priceM}" data-usd="${pkg.priceUSD}">${currency==='M'?pkg.priceM:pkg.priceUSD}</div>
       </div>`;
   }
 
   function render(){
-    document.getElementById('pkgList').innerHTML =
-      packages.map((p,i)=>rowHTML(p,i,'pkg')).join('') +
-      `<div class="add-row-btn" id="addPkgBtn">+ Add package</div>`;
-    document.getElementById('maintList').innerHTML = rowHTML(maintenance,0,'maint');
+    document.getElementById('pkgGrid').innerHTML =
+      packages.map((p,i)=>cardHTML(p,i)).join('') +
+      `<div class="add-card" id="addPkgBtn">+ Add package</div>`;
+    document.getElementById('maintRow').innerHTML = maintHTML(maintenance);
     attachRowEvents();
   }
 
   function attachRowEvents(){
     document.querySelectorAll('.remove-btn').forEach(btn=>{
       btn.onclick = (e)=>{
-        const row = e.target.closest('.pkg-row');
-        const list = row.dataset.list;
-        const idx = +row.dataset.idx;
-        if(list==='pkg'){ packages.splice(idx,1); render(); }
+        const card = e.target.closest('.pkg-card');
+        const idx = +card.dataset.idx;
+        packages.splice(idx,1);
+        render();
       };
     });
     const addBtn = document.getElementById('addPkgBtn');
     if(addBtn){
       addBtn.onclick = ()=>{
-        packages.push({dot:'#6fe3ac', name:'New Package', desc:'Describe what\'s included', priceM:'M0', priceUSD:'$0', orange:false, popular:false});
+        packages.push({dot:'#6fe3ac', name:'New Package', desc:"Describe what's included", priceM:'M0', priceUSD:'$0', orange:false, popular:false});
         render();
       };
     }
   }
 
   function saveCurrentEditsToData(){
-    // pull any edited price text back into data-m/data-usd before switching currency
     document.querySelectorAll('.pkg-price').forEach(el=>{
       if(currency==='M') el.dataset.m = el.textContent.trim();
       else el.dataset.usd = el.textContent.trim();
@@ -325,37 +398,47 @@
   document.getElementById('optM').onclick = ()=>switchCurrency('M');
   document.getElementById('optUSD').onclick = ()=>switchCurrency('USD');
 
-  document.getElementById('purpleColor').oninput = (e)=>{
-    document.documentElement.style.setProperty('--purple', e.target.value);
+  const posterOuter = document.getElementById('posterOuter');
+  document.getElementById('themeDark').onclick = ()=>{
+    posterOuter.classList.remove('theme-light');
+    document.getElementById('themeDark').classList.add('active');
+    document.getElementById('themeLight').classList.remove('active');
+  };
+  document.getElementById('themeLight').onclick = ()=>{
+    posterOuter.classList.add('theme-light');
+    document.getElementById('themeLight').classList.add('active');
+    document.getElementById('themeDark').classList.remove('active');
   };
 
   document.getElementById('exportBtn').onclick = ()=>{
     const btn = document.getElementById('exportBtn');
     btn.disabled = true; btn.textContent = 'Exporting…';
 
-    // clear any active text-edit focus/highlight
     if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
 
-    // hide tool-only controls so they never appear in the exported image
     const addBtn = document.getElementById('addPkgBtn');
     const removeBtns = document.querySelectorAll('.remove-btn');
     if(addBtn) addBtn.style.display = 'none';
     removeBtns.forEach(b=> b.style.display = 'none');
 
-    const target = document.getElementById('posterOuter');
-
-    html2canvas(target, {scale:3, backgroundColor:null, useCORS:true}).then(canvas=>{
-      const link = document.createElement('a');
-      link.download = 'cre8learn-price-list.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    }).catch(err=>{
-      console.error(err);
-      alert('Export failed — try again.');
-    }).finally(()=>{
-      if(addBtn) addBtn.style.display = '';
-      removeBtns.forEach(b=> b.style.display = '');
-      btn.disabled = false; btn.textContent = 'Export as PNG';
+    // wait a frame so the DOM change above is committed before the snapshot
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        const target = document.getElementById('posterOuter');
+        html2canvas(target, {scale:3, backgroundColor:null, useCORS:true}).then(canvas=>{
+          const link = document.createElement('a');
+          link.download = 'cre8learn-price-list.png';
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+        }).catch(err=>{
+          console.error(err);
+          alert('Export failed — try again.');
+        }).finally(()=>{
+          if(addBtn) addBtn.style.display = '';
+          removeBtns.forEach(b=> b.style.display = '');
+          btn.disabled = false; btn.textContent = 'Export as PNG';
+        });
+      });
     });
   };
 
