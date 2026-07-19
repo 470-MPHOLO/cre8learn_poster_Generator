@@ -2,7 +2,9 @@
   :root{
     --navy:#0c2c5e;
     --navy-2:#123a78;
-    --gold:#f5c518;
+    --blue-mid:#1f6fc4;
+    --blue-light:#e7f1fc;
+    --blue-line:#c9defa;
     --bg-body:#ffffff;
   }
   *{box-sizing:border-box;}
@@ -55,7 +57,7 @@
   }
 
   .banner{
-    background:var(--gold);
+    background:var(--blue-light);
     color:var(--navy);
     text-align:center;
     font-weight:800;
@@ -63,13 +65,15 @@
     letter-spacing:.03em;
     padding:14px 10px;
     outline:none;
+    border-top:1px solid var(--blue-line);
+    border-bottom:1px solid var(--blue-line);
   }
 
   .body-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:18px;
-    padding:24px 20px 6px;
+    padding:24px 20px 16px;
   }
   .col-header{
     background:var(--navy);
@@ -88,11 +92,12 @@
   .service-row{
     position:relative;
     padding:11px 0;
-    border-bottom:1px dashed rgba(12,44,94,.18);
+    border-bottom:1px dashed var(--blue-line);
     display:flex;
     justify-content:space-between;
-    align-items:flex-start;
+    align-items:center;
     gap:6px;
+    min-height:40px;
   }
   .service-row:last-child{border-bottom:none;}
   .service-text{flex:1;min-width:0;}
@@ -105,8 +110,9 @@
   .price .m{outline:none;}
   .price .num{
     outline:none;
-    padding:0 2px;
-    background:linear-gradient(to top, var(--gold) 34%, transparent 34%);
+    padding:0 3px;
+    border-radius:3px;
+    background:var(--blue-light);
   }
   .remove-btn{
     position:absolute;top:2px;right:-6px;
@@ -138,7 +144,8 @@
   }
   .footer-contacts .num{outline:none;}
   .footer-contacts .sep{opacity:.5;font-weight:400;}
-  .phone-ico{font-size:15px;}
+  .phone-ico{display:inline-flex;width:15px;height:15px;}
+  .phone-ico svg{width:100%;height:100%;}
 
   [contenteditable="true"]{cursor:text;}
   [contenteditable="true"]:focus{background:rgba(31,111,196,.14);border-radius:4px;}
@@ -155,8 +162,8 @@
   .panel p.hint{font-size:12px;color:#8a8a9a;margin:0 0 16px;line-height:1.5;}
   .exportBtn{
     width:100%;
-    background:linear-gradient(120deg,#f5c518,#1f6fc4);
-    color:#0a2450;
+    background:linear-gradient(120deg,#1f6fc4,#0c2c5e);
+    color:#fff;
     font-weight:800;
     border:none;
     border-radius:12px;
@@ -199,7 +206,7 @@
       <div class="footer-band">
         <div class="footer-title" contenteditable="true">Call or WhatsApp:</div>
         <div class="footer-contacts">
-          <span class="phone-ico">📞</span>
+          <span class="phone-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></span>
           <span class="num" contenteditable="true">+266 63608813</span>
           <span class="sep">|</span>
           <span class="num" contenteditable="true">+266 56124951</span>
@@ -243,7 +250,7 @@
         <span class="remove-btn" title="Remove">×</span>
         <div class="service-text">
           <div class="service-name" contenteditable="true">${item.name}</div>
-          ${item.sub ? `<div class="service-sub" contenteditable="true">${item.sub}</div>` : `<div class="service-sub" contenteditable="true" style="display:none"></div>`}
+          ${item.sub ? `<div class="service-sub" contenteditable="true">${item.sub}</div>` : ``}
         </div>
         <div class="price"><span class="m" contenteditable="true">M</span><span class="num" contenteditable="true">${item.price}</span></div>
       </div>`;
